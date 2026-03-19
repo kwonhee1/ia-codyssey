@@ -133,6 +133,19 @@ class FileReader:
             return []
 
 
+class FileWriter:
+
+    @staticmethod
+    def write(filepath: str, data_list: list):
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                for data in data_list:
+                    line = ','.join(el.value for el in data._elements)
+                    f.write(line + '\n')
+        except Exception as e:
+            print(f'오류 발생: {e}')
+
+
 class Storage:
     """Data(Element 모음)를 전문으로 관리하는 클래스"""
 
@@ -150,6 +163,9 @@ class Storage:
         
         self._data.sort(key=lambda data: data.get(key_cls), reverse=not ascending)
 
+    def filter(self, condition):
+        return [data for data in self._data if condition(data)]
+
 
 class Main:
     """FileReader와 Storage를 조합하여 실행 흐름 제어"""
@@ -157,7 +173,7 @@ class Main:
     def __init__(self):
         self.storage = Storage()
 
-    def run(self, filepath: str):
+    def run(self, filepath: str, error_filepath: str):
         lines = FileReader.read(filepath)
         if not lines:
             print('읽을 데이터가 없습니다.')
@@ -179,10 +195,13 @@ class Main:
 
         self.storage.set(data_list)
         self.storage.sort(Timestamp, False)
-        
+
         for data in self.storage.get():
             print(data)
 
+        errors = self.storage.filter(lambda d: d.get(Event).value == 'ERROR')
+        FileWriter.write(error_filepath, errors)
+
 
 if __name__ == '__main__':
-    Main().run('mission_computer_main.log')
+    Main().run('mission_computer_main.log', 'error.log')

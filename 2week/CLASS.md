@@ -6,6 +6,10 @@
 - **책임** : 파일을 읽어 `list[str]` 형태로 변환 후 반환
 - static 방식으로 동작하는 유틸리티 클래스
 
+### FileWriter
+- **책임** : 필터링 등 가공된 Data 객체들을 지정된 파일에 기록
+- static 방식으로 동작하는 유틸리티 클래스
+
 ### Element (Interface)
 각각의 요소를 담당함
 - sort를 위한 순위 비교 함수
@@ -25,7 +29,7 @@ Element를 구현
 - **책임** : Data를 메모리에 저장·관리
 - set, get 함수
 - 제네릭 처리
-- key 기준 sort 기능 추가
+- sort, filter 기능 구현
 
 ### Main
 - **책임** : FileReader와 Storage를 조합하여 실행 흐름 제어
@@ -39,6 +43,10 @@ Element를 구현
 classDiagram
     class FileReader {
         +read(filepath: str)$ list~str~
+    }
+
+    class FileWriter {
+        +write(filepath: str, data_list: list~Data~)$ None
     }
 
     class Element {
@@ -96,6 +104,7 @@ classDiagram
     
     Data o-- Element : has many
     Main --> FileReader : uses
+    Main --> FileWriter : uses
     Main --> Storage : uses
     Main ..> Element : uses (findElementType)
     Storage --> Data : stores

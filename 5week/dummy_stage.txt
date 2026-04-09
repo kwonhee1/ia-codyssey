@@ -1,0 +1,6 @@
+mars_base_internal_temperature,18,30
+mars_base_external_temperature,0,21
+mars_base_internal_humidity,50,60
+mars_base_external_illuminance,500,715
+mars_base_internal_co2,0.02,0.1
+mars_base_internal_oxygen,4.0,7.0

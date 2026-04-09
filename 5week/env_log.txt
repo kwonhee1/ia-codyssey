@@ -1,0 +1,6 @@
+mars_base_internal_temperature: 19
+mars_base_external_temperature: 3
+mars_base_internal_humidity: 60
+mars_base_external_illuminance: 625
+mars_base_internal_co2: 0.08
+mars_base_internal_oxygen: 4.9

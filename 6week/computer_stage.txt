@@ -1,0 +1,2 @@
+name=MarsBaseComputer01
+location=mars_base_alpha
